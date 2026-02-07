@@ -120,7 +120,7 @@
     };
 
     // Calculation
-    function calculate() { function round(val, digits) {
+    function round(val, digits) {
   return Math.round((val + Number.EPSILON) * 10 ** digits) / 10 ** digits;
 }
 
@@ -133,29 +133,19 @@ function calculate() {
     return;
   }
 
-  if (L <= 0 || L > 2000) {
-    alert("Half tension length out of range");
-    return;
-  }
+  const T0 = 35;
+  const alpha = 1.7e-5;
 
-  if (T < -10 || T > 70) {
-    alert("Temperature out of practical TRD range");
-    return;
-  }
-
-  const T0 = 35;        // Reference temperature (°C)
-  const alpha = 1.7e-5; // Copper expansion coefficient
-
-  const deltaL = L * alpha * (T - T0) * 1000; // mm
+  const deltaL = L * alpha * (T - T0) * 1000;
 
   const X = 1300 + deltaL;
   const Y = 2300 + 3 * deltaL;
 
   document.getElementById("resX_mm").textContent = round(X, 2);
-  document.getElementById("resX_m").textContent  = round(X / 1000, 4);
+  document.getElementById("resX_m").textContent = round(X / 1000, 4);
 
   document.getElementById("resY_mm").textContent = round(Y, 2);
-  document.getElementById("resY_m").textContent  = round(Y / 1000, 4);
+  document.getElementById("resY_m").textContent = round(Y / 1000, 4);
 
   document.getElementById("results").classList.remove("hidden");
 }
