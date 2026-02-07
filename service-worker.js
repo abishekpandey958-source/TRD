@@ -1,4 +1,4 @@
-const CACHE_NAME = "re-app-v1";
+const CACHE_NAME = "atd-calc-v3";
 
 const FILES_TO_CACHE = [
   "./",
