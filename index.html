@@ -120,24 +120,45 @@
     };
 
     // Calculation
-    function calculate() {
-      const L = parseFloat(length.value);
-      const T = parseFloat(temperature.value);
+    function calculate() { function round(val, digits) {
+  return Math.round((val + Number.EPSILON) * 10 ** digits) / 10 ** digits;
+}
 
-      if (isNaN(L) || isNaN(T)) {
-        alert("Enter valid values");
-        return;
-      }
+function calculate() {
+  const L = parseFloat(document.getElementById("length").value);
+  const T = parseFloat(document.getElementById("temperature").value);
 
-      const expansion = L * 0.000017 * (35 - T) * 1000;
-      const X = 1300 + expansion;
-      const Y = 2300 + 3 * expansion;
+  if (isNaN(L) || isNaN(T)) {
+    alert("Please enter valid numbers");
+    return;
+  }
 
-      resX_mm.textContent = X.toFixed(2);
-      resY_mm.textContent = Y.toFixed(2);
+  if (L <= 0 || L > 2000) {
+    alert("Half tension length out of range");
+    return;
+  }
 
-      results.classList.remove("hidden");
-    }
+  if (T < -10 || T > 70) {
+    alert("Temperature out of practical TRD range");
+    return;
+  }
+
+  const T0 = 35;        // Reference temperature (°C)
+  const alpha = 1.7e-5; // Copper expansion coefficient
+
+  const deltaL = L * alpha * (T - T0) * 1000; // mm
+
+  const X = 1300 + deltaL;
+  const Y = 2300 + 3 * deltaL;
+
+  document.getElementById("resX_mm").textContent = round(X, 2);
+  document.getElementById("resX_m").textContent  = round(X / 1000, 4);
+
+  document.getElementById("resY_mm").textContent = round(Y, 2);
+  document.getElementById("resY_m").textContent  = round(Y / 1000, 4);
+
+  document.getElementById("results").classList.remove("hidden");
+}
 
     // Icons
     lucide.createIcons();
