@@ -8,101 +8,102 @@
 <style>
 body{
   margin:0;
-  font-family: "Segoe UI", system-ui, sans-serif;
-  background: linear-gradient(180deg,#0f172a,#e5e7eb);
+  font-family:"Segoe UI",system-ui,sans-serif;
+  background:linear-gradient(180deg,#0f172a,#e5e7eb);
 }
 
-/* MATTE HEADER */
+/* COMPACT MATTE HEADER */
 .title-box{
-  margin:22px 14px 10px;
-  padding:22px 14px;
-  background: linear-gradient(145deg,#1e293b,#0f172a);
-  border-radius:20px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05),
-              0 14px 30px rgba(0,0,0,0.4);
+  margin:14px 14px 6px;
+  padding:16px 14px;
+  background:linear-gradient(145deg,#1e293b,#0f172a);
+  border-radius:18px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05),
+              0 12px 24px rgba(0,0,0,.35);
   text-align:center;
 }
-
 .title-box h1{
   margin:0;
-  font-size:26px;
+  font-size:23px;
   color:#f8fafc;
   letter-spacing:1px;
 }
-
 .title-box p{
-  margin-top:6px;
-  font-size:14px;
+  margin-top:4px;
+  font-size:13px;
   color:#cbd5f5;
 }
 
 /* MAIN CARD */
 .container{
   max-width:420px;
-  margin:0 auto 30px;
-  padding:16px;
+  margin:0 auto;
+  padding:12px;
 }
-
 .card{
-  background: linear-gradient(180deg,#f8fafc,#eef2f7);
-  border-radius:22px;
-  padding:22px;
-  box-shadow:0 18px 40px rgba(0,0,0,0.15);
+  background:linear-gradient(180deg,#f8fafc,#eef2f7);
+  border-radius:20px;
+  padding:16px;
+  box-shadow:0 16px 34px rgba(0,0,0,.15);
 }
 
+/* CHIP */
 .chip{
   background:#fff;
-  border-radius:30px;
-  padding:12px;
+  border-radius:24px;
+  padding:10px;
   text-align:center;
   font-weight:700;
-  margin-bottom:20px;
-  box-shadow: inset 0 2px 6px rgba(0,0,0,0.08);
+  margin-bottom:14px;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,.08);
 }
 
+/* INPUTS */
 label{
   font-weight:600;
+  margin:8px 0 4px;
   display:block;
-  margin:14px 0 6px;
 }
-
 input{
   width:100%;
-  padding:14px;
-  font-size:18px;
-  border-radius:14px;
+  padding:12px;
+  font-size:17px;
+  border-radius:12px;
   border:none;
   background:#fff;
-  box-shadow: inset 0 3px 8px rgba(0,0,0,0.12);
+  box-shadow: inset 0 3px 8px rgba(0,0,0,.12);
   outline:none;
 }
 
+/* BUTTON */
 button{
   width:100%;
-  margin-top:22px;
-  padding:16px;
-  font-size:20px;
+  margin-top:14px;
+  padding:14px;
+  font-size:18px;
   font-weight:800;
   color:#fff;
   border:none;
-  border-radius:18px;
-  background: linear-gradient(135deg,#1e40af,#2563eb);
-  box-shadow:0 14px 28px rgba(30,64,175,0.55);
+  border-radius:16px;
+  background:linear-gradient(135deg,#1e40af,#2563eb);
+  box-shadow:0 12px 24px rgba(30,64,175,.5);
 }
 
+/* RESULT (COMPACT) */
 .result{
-  margin-top:22px;
-  padding:18px;
-  border-radius:18px;
-  background: linear-gradient(180deg,#eef2ff,#f8fafc);
-  box-shadow: inset 0 2px 10px rgba(0,0,0,0.12);
-  font-size:17px;
+  margin-top:14px;
+  padding:14px;
+  border-radius:16px;
+  background:linear-gradient(180deg,#eef2ff,#f8fafc);
+  box-shadow: inset 0 2px 10px rgba(0,0,0,.12);
+  font-size:16px;
 }
 
+/* FOOTER */
 .footer{
   text-align:center;
-  font-size:13px;
-  margin:26px 0;
+  font-size:12px;
+  margin:16px 8px;
   color:#374151;
 }
 .footer .copy{
@@ -125,12 +126,12 @@ button{
     <div class="chip">3-Pulley Modified ATD</div>
 
     <label>Half Tension Length (m)</label>
-    <input id="length" type="number" inputmode="decimal" placeholder="e.g. 750">
+    <input id="length" type="number" placeholder="750">
 
     <label>Temperature (°C)</label>
-    <input id="temp" type="number" inputmode="decimal" placeholder="e.g. 35">
+    <input id="temp" type="number" placeholder="35">
 
-    <button type="button" onclick="calculate()">Calculate Dimensions</button>
+    <button onclick="calculate()">Calculate Dimensions</button>
 
     <div class="result" id="output">
       Enter values and press Calculate
@@ -140,40 +141,32 @@ button{
 </div>
 
 <div class="footer">
-  Formula: X / Y = 1300 / 2300 + (L × 1.7×10<sup>-5</sup> × ΔT)<br><br>
+  Formula: X / Y = 1300 / 2300 + (L × 1.7×10<sup>-5</sup> × ΔT)<br>
   <b>EASTERN RAILWAY – TRD / BASIRHAT</b><br>
   <span class="copy">© 2026 Abhishek Pandey. All Rights Reserved.</span>
 </div>
 
 <script>
 function calculate(){
-
   const L = Number(document.getElementById("length").value);
   const T = Number(document.getElementById("temp").value);
-
   if(!L || !T){
-    document.getElementById("output").innerHTML =
-      "⚠️ Please enter valid numeric values";
+    document.getElementById("output").innerHTML="⚠️ Enter valid values";
     return;
   }
 
-  const refTemp = 35;
-  const deltaT = T - refTemp;
+  const refTemp=35, alpha=1.7e-5;
+  const deltaT=T-refTemp;
+  const expansion=L*alpha*deltaT;
 
-  const X_base = 1300;
-  const Y_base = 2300;
-  const alpha = 1.7e-5;
+  const X=1300+(1300*expansion);
+  const Y=2300+(2300*expansion);
 
-  const expansion = L * alpha * deltaT;
-
-  const X = X_base + (X_base * expansion);
-  const Y = Y_base + (Y_base * expansion);
-
-  document.getElementById("output").innerHTML = `
+  document.getElementById("output").innerHTML=`
     <b>ΔT:</b> ${deltaT.toFixed(1)} °C<br><br>
     <b>X:</b> ${X.toFixed(2)} mm (${(X/1000).toFixed(3)} m)<br>
     <b>Y:</b> ${Y.toFixed(2)} mm (${(Y/1000).toFixed(3)} m)<br><br>
-    Reference Temperature = <b>35°C</b> (Indian Railway TRD Standard)
+    Reference Temperature = <b>35°C</b>
   `;
 }
 </script>
