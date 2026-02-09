@@ -14,25 +14,18 @@
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
-    /* ---------- GLOBAL ---------- */
     body {
       background: linear-gradient(180deg, #e2e8f0, #f8fafc);
       -webkit-user-select: none;
       user-select: none;
       -webkit-tap-highlight-color: transparent;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont;
     }
 
-    input {
-      user-select: text;
-    }
+    input { user-select: text; }
 
-    /* ---------- SPLASH ---------- */
     #splash {
       position: fixed;
       inset: 0;
@@ -46,7 +39,6 @@
 
     #splash img {
       width: 120px;
-      height: 120px;
       margin-bottom: 15px;
       filter: drop-shadow(0 10px 25px rgba(0,0,0,.6));
     }
@@ -57,42 +49,33 @@
       letter-spacing: 1px;
     }
 
-    /* ---------- PREMIUM CARDS ---------- */
     .card-3d {
       background: linear-gradient(145deg, #ffffff, #e5e7eb);
-      box-shadow:
-        6px 6px 16px rgba(0,0,0,0.18),
-        inset 1px 1px 2px rgba(255,255,255,0.9);
+      box-shadow: 6px 6px 16px rgba(0,0,0,.18),
+                  inset 1px 1px 2px rgba(255,255,255,.9);
     }
 
     .input-3d {
       background: #f8fafc;
-      box-shadow:
-        inset 3px 3px 6px rgba(0,0,0,0.15),
-        inset -3px -3px 6px rgba(255,255,255,0.9);
+      box-shadow: inset 3px 3px 6px rgba(0,0,0,.15),
+                  inset -3px -3px 6px rgba(255,255,255,.9);
       font-size: 1.05rem;
     }
 
-    /* ---------- BUTTON ---------- */
     .btn-premium {
       background: linear-gradient(145deg, #1e3a8a, #2563eb);
-      box-shadow:
-        0 10px 25px rgba(37,99,235,.45),
-        inset 1px 1px 2px rgba(255,255,255,.3);
-      letter-spacing: .5px;
+      box-shadow: 0 10px 25px rgba(37,99,235,.45),
+                  inset 1px 1px 2px rgba(255,255,255,.3);
     }
 
     .btn-premium:active {
       transform: scale(.98);
-      box-shadow: inset 4px 4px 10px rgba(0,0,0,.4);
     }
 
-    /* ---------- RESULT ---------- */
     .result-card {
       background: linear-gradient(145deg, #f8fafc, #e2e8f0);
-      box-shadow:
-        8px 8px 18px rgba(0,0,0,0.25),
-        inset 1px 1px 2px rgba(255,255,255,0.85);
+      box-shadow: 8px 8px 18px rgba(0,0,0,.25),
+                  inset 1px 1px 2px rgba(255,255,255,.85);
     }
   </style>
 </head>
@@ -101,13 +84,13 @@
 
 <!-- Splash -->
 <div id="splash">
-  <img src="logo.png" alt="ATD Calc">
+  <img src="logo.png">
   <h1>ATD Calc</h1>
 </div>
 
 <!-- Header -->
 <div class="text-center mt-6">
-  <h1 class="text-2xl font-extrabold text-slate-900 tracking-wide">
+  <h1 class="text-2xl font-extrabold text-slate-900">
     ATD DIMENSION CALCULATOR
   </h1>
   <p class="text-sm text-slate-600">
@@ -118,54 +101,44 @@
 <!-- Main -->
 <main class="p-4 max-w-md mx-auto space-y-4">
 
-  <div class="card-3d rounded-full text-center py-3 font-bold text-slate-800">
+  <div class="card-3d rounded-full text-center py-3 font-bold">
     3-Pulley Modified ATD
   </div>
 
   <div>
-    <label class="text-sm font-semibold text-slate-700">
-      Half Tension Length (m)
-    </label>
-    <input id="length" type="number"
-      class="input-3d w-full p-4 rounded-xl mt-1">
+    <label class="text-sm font-semibold">Half Tension Length (m)</label>
+    <input id="length" type="number" class="input-3d w-full p-4 rounded-xl mt-1">
   </div>
 
   <div>
-    <label class="text-sm font-semibold text-slate-700">
-      Temperature (°C)
-    </label>
-    <input id="temperature" type="number"
-      class="input-3d w-full p-4 rounded-xl mt-1">
+    <label class="text-sm font-semibold">Temperature (°C)</label>
+    <input id="temperature" type="number" class="input-3d w-full p-4 rounded-xl mt-1">
   </div>
 
-  <button onclick="calculate()"
-    class="btn-premium w-full text-white py-4 rounded-xl font-bold text-lg">
+  <button onclick="calculate()" class="btn-premium w-full text-white py-4 rounded-xl font-bold text-lg">
     Calculate Dimensions
   </button>
 
   <!-- Results -->
   <div id="results" class="hidden result-card rounded-xl p-4 space-y-2">
 
-    <p class="text-sm text-slate-700">
-      <b>ΔT (Temp Difference):</b>
-      <span id="deltaT">0</span> °C
-    </p>
+    <p><b>ΔT:</b> <span id="deltaT">0</span> °C</p>
 
-    <p class="text-lg font-semibold text-slate-900">
-      X: <span id="resX_mm">0.00</span> mm
+    <p class="text-lg font-semibold">
+      X: <span id="resX_mm">0</span> mm
       <span class="text-sm text-slate-600">
-        ( <span id="resX_m">0.000</span> m )
+        ( <span id="resX_m">0</span> m )
       </span>
     </p>
 
-    <p class="text-lg font-semibold text-slate-900">
-      Y: <span id="resY_mm">0.00</span> mm
+    <p class="text-lg font-semibold">
+      Y: <span id="resY_mm">0</span> mm
       <span class="text-sm text-slate-600">
-        ( <span id="resY_m">0.000</span> m )
+        ( <span id="resY_m">0</span> m )
       </span>
     </p>
 
-    <p class="text-xs border-t pt-2 mt-2 text-blue-800 font-bold">
+    <p class="text-xs border-t pt-2 text-blue-800 font-bold">
       Reference Temperature =
       <span class="bg-blue-100 px-2 py-0.5 rounded">35°C</span>
       (Indian Railway TRD Standard)
@@ -175,37 +148,26 @@
 
 </main>
 
-<!-- Footer -->
-<footer class="text-center text-xs text-slate-500 mt-6 pb-6 space-y-1">
-
-  <p>
-    Formula: X / Y = 1300 / 2300 + (L × 1.7×10⁻⁵ × ΔT)
-  </p>
-
-  <p class="font-bold text-slate-700">
-    EASTERN RAILWAY – TRD / BASIRHAT
-  </p>
-
+<footer class="text-center text-xs mt-6 pb-6 space-y-1">
+  <p>Formula: X / Y = 1300 / 2300 + (L × 1.7×10⁻⁵ × ΔT)</p>
+  <p class="font-bold">EASTERN RAILWAY – TRD / BASIRHAT</p>
   <p class="text-[11px] font-semibold text-amber-600">
     © 2026 Abhishek Pandey. All Rights Reserved.
   </p>
-
 </footer>
 
 <script>
   window.onload = () => {
-    setTimeout(() => {
-      document.getElementById("splash").style.display = "none";
-    }, 2000);
+    setTimeout(() => document.getElementById("splash").style.display = "none", 2000);
   };
 
-  function round(val, digits) {
-    return Math.round((val + Number.EPSILON) * 10 ** digits) / 10 ** digits;
+  function round(v, d) {
+    return Math.round((v + Number.EPSILON) * 10 ** d) / 10 ** d;
   }
 
   function calculate() {
-    const L = parseFloat(length.value);
-    const T = parseFloat(temperature.value);
+    const L = parseFloat(document.getElementById("length").value);
+    const T = parseFloat(document.getElementById("temperature").value);
 
     if (isNaN(L) || isNaN(T)) {
       alert("Please enter valid numbers");
@@ -221,20 +183,13 @@
     const X = 1300 + deltaL;
     const Y = 2300 + 3 * deltaL;
 
-    deltaTSpan = document.getElementById("deltaT");
-    deltaTSpan.textContent = deltaT;
+    document.getElementById("deltaT").textContent = deltaT;
+    document.getElementById("resX_mm").textContent = round(X, 2);
+    document.getElementById("resY_mm").textContent = round(Y, 2);
+    document.getElementById("resX_m").textContent = round(X / 1000, 3);
+    document.getElementById("resY_m").textContent = round(Y / 1000, 3);
 
-    resX_mm.textContent = round(X, 2);
-    resY_mm.textContent = round(Y, 2);
-    resX_m.textContent = round(X / 1000, 3);
-    resY_m.textContent = round(Y / 1000, 3);
-
-    results.classList.remove("hidden");
-    results.scrollIntoView({ behavior: "smooth" });
-  }
-
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js");
+    document.getElementById("results").classList.remove("hidden");
   }
 </script>
 
