@@ -1,196 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>3 Pulley Modified ATD</title>
+<title>ATD Dimension Calculator</title>
 
-  <!-- PWA -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0f172a">
-  <link rel="icon" href="app-icon.png">
-  <link rel="apple-touch-icon" href="app-icon.png">
+<style>
+body{
+  margin:0;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: linear-gradient(180deg,#0f172a,#e5e7eb);
+  color:#111827;
+}
 
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
+/* ===== PREMIUM MATTE TITLE BOX ===== */
+.title-box{
+  margin:24px 16px 10px;
+  padding:22px 16px;
+  background: linear-gradient(145deg,#1e293b,#111827);
+  border-radius:20px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.06),
+    0 14px 30px rgba(0,0,0,0.35);
+  text-align:center;
+}
 
-  <style>
-    body {
-      background: linear-gradient(180deg, #e2e8f0, #f8fafc);
-      -webkit-user-select: none;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
+.title-box h1{
+  margin:0;
+  font-size:26px;
+  letter-spacing:1px;
+  color:#f8fafc;
+  font-weight:800;
+}
 
-    input { user-select: text; }
+.title-box p{
+  margin-top:6px;
+  font-size:14px;
+  color:#cbd5f5;
+}
 
-    #splash {
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(circle, #0f172a, #020617);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
+/* ===== MAIN CARD ===== */
+.container{
+  max-width:420px;
+  margin:0 auto 30px;
+  padding:16px;
+}
 
-    #splash img {
-      width: 120px;
-      margin-bottom: 15px;
-      filter: drop-shadow(0 10px 25px rgba(0,0,0,.6));
-    }
+.card{
+  background: linear-gradient(180deg,#f8fafc,#eef2f7);
+  border-radius:22px;
+  padding:22px;
+  box-shadow:0 18px 40px rgba(0,0,0,0.15);
+}
 
-    #splash h1 {
-      color: #e5e7eb;
-      font-size: 24px;
-      letter-spacing: 1px;
-    }
+/* CHIP */
+.chip{
+  background:#ffffff;
+  border-radius:30px;
+  padding:12px;
+  font-weight:700;
+  text-align:center;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.08);
+  margin-bottom:22px;
+}
 
-    .card-3d {
-      background: linear-gradient(145deg, #ffffff, #e5e7eb);
-      box-shadow: 6px 6px 16px rgba(0,0,0,.18),
-                  inset 1px 1px 2px rgba(255,255,255,.9);
-    }
+/* INPUTS */
+label{
+  font-weight:600;
+  display:block;
+  margin:12px 0 6px;
+}
 
-    .input-3d {
-      background: #f8fafc;
-      box-shadow: inset 3px 3px 6px rgba(0,0,0,.15),
-                  inset -3px -3px 6px rgba(255,255,255,.9);
-      font-size: 1.05rem;
-    }
+input{
+  width:100%;
+  padding:14px;
+  font-size:18px;
+  border-radius:14px;
+  border:none;
+  background:#ffffff;
+  box-shadow: inset 0 3px 8px rgba(0,0,0,0.12);
+  outline:none;
+}
 
-    .btn-premium {
-      background: linear-gradient(145deg, #1e3a8a, #2563eb);
-      box-shadow: 0 10px 25px rgba(37,99,235,.45),
-                  inset 1px 1px 2px rgba(255,255,255,.3);
-    }
+/* BUTTON */
+button{
+  width:100%;
+  margin-top:22px;
+  padding:16px;
+  font-size:20px;
+  font-weight:800;
+  color:white;
+  border:none;
+  border-radius:18px;
+  background: linear-gradient(135deg,#1e40af,#2563eb);
+  box-shadow:0 14px 28px rgba(30,64,175,0.55);
+}
 
-    .btn-premium:active {
-      transform: scale(.98);
-    }
+button:active{
+  transform:scale(0.98);
+}
 
-    .result-card {
-      background: linear-gradient(145deg, #f8fafc, #e2e8f0);
-      box-shadow: 8px 8px 18px rgba(0,0,0,.25),
-                  inset 1px 1px 2px rgba(255,255,255,.85);
-    }
-  </style>
+/* RESULT */
+.result{
+  margin-top:24px;
+  padding:18px;
+  border-radius:18px;
+  background: linear-gradient(180deg,#eef2ff,#f8fafc);
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.12);
+  font-size:17px;
+}
+
+/* FOOTER */
+.footer{
+  text-align:center;
+  font-size:13px;
+  margin:26px 0;
+  color:#374151;
+}
+.footer b{color:#000}
+.footer .copy{
+  color:#f59e0b;
+  font-weight:700;
+}
+</style>
 </head>
 
 <body>
 
-<!-- Splash -->
-<div id="splash">
-  <img src="logo.png">
-  <h1>ATD Calc</h1>
+<!-- PREMIUM MATTE HEADER -->
+<div class="title-box">
+  <h1>ATD DIMENSION CALCULATOR</h1>
+  <p>Developed by <b>Abhishek Pandey</b></p>
 </div>
 
-<!-- Header -->
-<div class="text-center mt-6">
-  <h1 class="text-2xl font-extrabold text-slate-900">
-    ATD DIMENSION CALCULATOR
-  </h1>
-  <p class="text-sm text-slate-600">
-    Developed by <b>Abhishek Pandey</b>
-  </p>
+<div class="container">
+  <div class="card">
+
+    <div class="chip">3-Pulley Modified ATD</div>
+
+    <label>Half Tension Length (m)</label>
+    <input type="number" id="length" placeholder="Enter length">
+
+    <label>Temperature (°C)</label>
+    <input type="number" id="temp" placeholder="Enter temperature">
+
+    <button onclick="calculate()">Calculate Dimensions</button>
+
+    <div class="result" id="output">
+      Enter values to calculate ATD dimensions
+    </div>
+
+  </div>
 </div>
 
-<!-- Main -->
-<main class="p-4 max-w-md mx-auto space-y-4">
-
-  <div class="card-3d rounded-full text-center py-3 font-bold">
-    3-Pulley Modified ATD
-  </div>
-
-  <div>
-    <label class="text-sm font-semibold">Half Tension Length (m)</label>
-    <input id="length" type="number" class="input-3d w-full p-4 rounded-xl mt-1">
-  </div>
-
-  <div>
-    <label class="text-sm font-semibold">Temperature (°C)</label>
-    <input id="temperature" type="number" class="input-3d w-full p-4 rounded-xl mt-1">
-  </div>
-
-  <button onclick="calculate()" class="btn-premium w-full text-white py-4 rounded-xl font-bold text-lg">
-    Calculate Dimensions
-  </button>
-
-  <!-- Results -->
-  <div id="results" class="hidden result-card rounded-xl p-4 space-y-2">
-
-    <p><b>ΔT:</b> <span id="deltaT">0</span> °C</p>
-
-    <p class="text-lg font-semibold">
-      X: <span id="resX_mm">0</span> mm
-      <span class="text-sm text-slate-600">
-        ( <span id="resX_m">0</span> m )
-      </span>
-    </p>
-
-    <p class="text-lg font-semibold">
-      Y: <span id="resY_mm">0</span> mm
-      <span class="text-sm text-slate-600">
-        ( <span id="resY_m">0</span> m )
-      </span>
-    </p>
-
-    <p class="text-xs border-t pt-2 text-blue-800 font-bold">
-      Reference Temperature =
-      <span class="bg-blue-100 px-2 py-0.5 rounded">35°C</span>
-      (Indian Railway TRD Standard)
-    </p>
-
-  </div>
-
-</main>
-
-<footer class="text-center text-xs mt-6 pb-6 space-y-1">
-  <p>Formula: X / Y = 1300 / 2300 + (L × 1.7×10⁻⁵ × ΔT)</p>
-  <p class="font-bold">EASTERN RAILWAY – TRD / BASIRHAT</p>
-  <p class="text-[11px] font-semibold text-amber-600">
-    © 2026 Abhishek Pandey. All Rights Reserved.
-  </p>
-</footer>
+<div class="footer">
+  Formula: X / Y = 1300 / 2300 + (L × 1.7×10<sup>-5</sup> × ΔT)<br><br>
+  <b>EASTERN RAILWAY – TRD / BASIRHAT</b><br>
+  <span class="copy">© 2026 Abhishek Pandey. All Rights Reserved.</span>
+</div>
 
 <script>
-  window.onload = () => {
-    setTimeout(() => document.getElementById("splash").style.display = "none", 2000);
-  };
+function calculate(){
+  const L = parseFloat(document.getElementById("length").value);
+  const T = parseFloat(document.getElementById("temp").value);
+  const refT = 35;
 
-  function round(v, d) {
-    return Math.round((v + Number.EPSILON) * 10 ** d) / 10 ** d;
+  if(isNaN(L) || isNaN(T)){
+    document.getElementById("output").innerHTML =
+      "⚠️ Please enter valid values";
+    return;
   }
 
-  function calculate() {
-    const L = parseFloat(document.getElementById("length").value);
-    const T = parseFloat(document.getElementById("temperature").value);
+  const deltaT = T - refT;
+  const factor = (L * 1.7e-5 * deltaT);
 
-    if (isNaN(L) || isNaN(T)) {
-      alert("Please enter valid numbers");
-      return;
-    }
+  const X = 1300 + (1300 * factor);
+  const Y = 2300 + (2300 * factor);
 
-    const T0 = 35;
-    const alpha = 1.7e-5;
-
-    const deltaT = T - T0;
-    const deltaL = L * alpha * deltaT * 1000;
-
-    const X = 1300 + deltaL;
-    const Y = 2300 + 3 * deltaL;
-
-    document.getElementById("deltaT").textContent = deltaT;
-    document.getElementById("resX_mm").textContent = round(X, 2);
-    document.getElementById("resY_mm").textContent = round(Y, 2);
-    document.getElementById("resX_m").textContent = round(X / 1000, 3);
-    document.getElementById("resY_m").textContent = round(Y / 1000, 3);
-
-    document.getElementById("results").classList.remove("hidden");
-  }
+  document.getElementById("output").innerHTML = `
+    ΔT: <b>${deltaT.toFixed(1)} °C</b><br><br>
+    <b>X:</b> ${X.toFixed(1)} mm (${(X/1000).toFixed(3)} m)<br>
+    <b>Y:</b> ${Y.toFixed(1)} mm (${(Y/1000).toFixed(3)} m)<br><br>
+    Reference Temperature = <b>35°C</b> (Indian Railway TRD Standard)
+  `;
+}
 </script>
 
 </body>
