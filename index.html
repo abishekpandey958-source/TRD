@@ -19,57 +19,6 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
-    /* ---------- 3D Typography ---------- */
-.trd-title-3d {
-  font-size: 1.6rem;           /* Bigger title */
-  font-weight: 900;
-  letter-spacing: 1px;
-  color: #0f2a44;
-  text-shadow:
-    1px 1px 0 #c7d2fe,
-    2px 2px 0 #a5b4fc,
-    3px 3px 6px rgba(0,0,0,0.25);
-}
-
-/* ---------- 3D Pill / Card ---------- */
-.trd-pill-3d {
-  background: linear-gradient(145deg, #102f4a, #0b1f33);
-  color: white;
-  box-shadow:
-    4px 4px 10px rgba(0,0,0,0.35),
-    inset 1px 1px 2px rgba(255,255,255,0.15);
-  transform: translateZ(0);
-}
-
-/* ---------- Input 3D ---------- */
-.trd-input {
-  font-size: 1.1rem;           /* Bigger input text */
-  box-shadow:
-    inset 2px 2px 4px rgba(0,0,0,0.15),
-    inset -2px -2px 4px rgba(255,255,255,0.8);
-}
-
-/* ---------- Button 3D ---------- */
-.trd-button-3d {
-  font-size: 1.2rem;           /* Bigger button text */
-  background: linear-gradient(145deg, #0f2a44, #0b1f33);
-  box-shadow:
-    4px 4px 10px rgba(0,0,0,0.4),
-    inset 1px 1px 2px rgba(255,255,255,0.2);
-}
-
-.trd-button-3d:active {
-  box-shadow:
-    inset 4px 4px 8px rgba(0,0,0,0.5);
-  transform: scale(0.98);
-}
-
-/* ---------- Result 3D Card ---------- */
-.trd-result-3d {
-  box-shadow:
-    6px 6px 14px rgba(0,0,0,0.25),
-    inset 1px 1px 2px rgba(255,255,255,0.6);
-}
     body {
       -webkit-user-select: none;
       user-select: none;
@@ -150,11 +99,27 @@
       <span id="deltaT">0</span> °C
     </p>
 
-    <p class="text-lg"><b>X:</b> <span id="resX_mm">0.00</span> mm</p>
-    <p class="text-lg"><b>Y:</b> <span id="resY_mm">0.00</span> mm</p>
+    <p class="text-lg">
+      <b>X:</b>
+      <span id="resX_mm">0.00</span> mm
+      <span class="text-sm text-slate-500">
+        ( <span id="resX_m">0.000</span> m )
+      </span>
+    </p>
 
-    <p class="text-xs text-slate-500 border-t pt-2 mt-2">
-      Reference Temperature = <b>35°C</b> (Indian Railway TRD Standard)
+    <p class="text-lg">
+      <b>Y:</b>
+      <span id="resY_mm">0.00</span> mm
+      <span class="text-sm text-slate-500">
+        ( <span id="resY_m">0.000</span> m )
+      </span>
+    </p>
+
+    <!-- Reference Temperature Highlight -->
+    <p class="text-xs border-t pt-2 mt-2 text-blue-700 font-semibold">
+      Reference Temperature =
+      <span class="bg-blue-100 px-2 py-0.5 rounded font-bold">35°C</span>
+      (Indian Railway TRD Standard)
     </p>
 
   </div>
@@ -163,6 +128,7 @@
 
 <!-- Footer -->
 <footer class="text-center text-xs text-slate-500 mt-6 pb-6 space-y-1">
+
   <p>
     Formula: X / Y = 1300 / 2300 + (L × 1.7×10⁻⁵ × ΔT)
   </p>
@@ -171,9 +137,11 @@
     EASTERN RAILWAY – TRD / BASIRHAT
   </p>
 
-  <p class="text-[11px] text-slate-400 mt-2">
+  <!-- Copyright Highlight -->
+  <p class="text-[11px] mt-2 font-semibold text-amber-600">
     © 2026 Abhishek Pandey. All Rights Reserved.
   </p>
+
 </footer>
 
 <script>
@@ -199,11 +167,11 @@
       return;
     }
 
-    const T0 = 35;           // IR reference temperature
-    const alpha = 1.7e-5;    // Copper expansion coefficient
+    const T0 = 35;        // Reference temperature
+    const alpha = 1.7e-5;
 
-    const deltaT = T - T0;   // ΔT
-    const deltaL = L * alpha * deltaT * 1000; // in mm
+    const deltaT = T - T0;
+    const deltaL = L * alpha * deltaT * 1000; // mm
 
     const X = 1300 + deltaL;
     const Y = 2300 + 3 * deltaL;
@@ -211,6 +179,8 @@
     document.getElementById("deltaT").textContent = deltaT;
     document.getElementById("resX_mm").textContent = round(X, 2);
     document.getElementById("resY_mm").textContent = round(Y, 2);
+    document.getElementById("resX_m").textContent = round(X / 1000, 3);
+    document.getElementById("resY_m").textContent = round(Y / 1000, 3);
 
     document.getElementById("results").classList.remove("hidden");
     document.getElementById("results").scrollIntoView({ behavior: "smooth" });
