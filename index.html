@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>ATD Dimension Calculator</title>
 
 <style>
@@ -11,27 +10,24 @@ body{
   margin:0;
   font-family: "Segoe UI", system-ui, sans-serif;
   background: linear-gradient(180deg,#0f172a,#e5e7eb);
-  color:#111827;
 }
 
-/* ===== PREMIUM MATTE TITLE BOX ===== */
+/* MATTE HEADER */
 .title-box{
-  margin:24px 16px 10px;
-  padding:22px 16px;
-  background: linear-gradient(145deg,#1e293b,#111827);
+  margin:22px 14px 10px;
+  padding:22px 14px;
+  background: linear-gradient(145deg,#1e293b,#0f172a);
   border-radius:20px;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.06),
-    0 14px 30px rgba(0,0,0,0.35);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05),
+              0 14px 30px rgba(0,0,0,0.4);
   text-align:center;
 }
 
 .title-box h1{
   margin:0;
   font-size:26px;
-  letter-spacing:1px;
   color:#f8fafc;
-  font-weight:800;
+  letter-spacing:1px;
 }
 
 .title-box p{
@@ -40,7 +36,7 @@ body{
   color:#cbd5f5;
 }
 
-/* ===== MAIN CARD ===== */
+/* MAIN CARD */
 .container{
   max-width:420px;
   margin:0 auto 30px;
@@ -54,22 +50,20 @@ body{
   box-shadow:0 18px 40px rgba(0,0,0,0.15);
 }
 
-/* CHIP */
 .chip{
-  background:#ffffff;
+  background:#fff;
   border-radius:30px;
   padding:12px;
-  font-weight:700;
   text-align:center;
+  font-weight:700;
+  margin-bottom:20px;
   box-shadow: inset 0 2px 6px rgba(0,0,0,0.08);
-  margin-bottom:22px;
 }
 
-/* INPUTS */
 label{
   font-weight:600;
   display:block;
-  margin:12px 0 6px;
+  margin:14px 0 6px;
 }
 
 input{
@@ -78,32 +72,26 @@ input{
   font-size:18px;
   border-radius:14px;
   border:none;
-  background:#ffffff;
+  background:#fff;
   box-shadow: inset 0 3px 8px rgba(0,0,0,0.12);
   outline:none;
 }
 
-/* BUTTON */
 button{
   width:100%;
   margin-top:22px;
   padding:16px;
   font-size:20px;
   font-weight:800;
-  color:white;
+  color:#fff;
   border:none;
   border-radius:18px;
   background: linear-gradient(135deg,#1e40af,#2563eb);
   box-shadow:0 14px 28px rgba(30,64,175,0.55);
 }
 
-button:active{
-  transform:scale(0.98);
-}
-
-/* RESULT */
 .result{
-  margin-top:24px;
+  margin-top:22px;
   padding:18px;
   border-radius:18px;
   background: linear-gradient(180deg,#eef2ff,#f8fafc);
@@ -111,14 +99,12 @@ button:active{
   font-size:17px;
 }
 
-/* FOOTER */
 .footer{
   text-align:center;
   font-size:13px;
   margin:26px 0;
   color:#374151;
 }
-.footer b{color:#000}
 .footer .copy{
   color:#f59e0b;
   font-weight:700;
@@ -128,7 +114,6 @@ button:active{
 
 <body>
 
-<!-- PREMIUM MATTE HEADER -->
 <div class="title-box">
   <h1>ATD DIMENSION CALCULATOR</h1>
   <p>Developed by <b>Abhishek Pandey</b></p>
@@ -140,15 +125,15 @@ button:active{
     <div class="chip">3-Pulley Modified ATD</div>
 
     <label>Half Tension Length (m)</label>
-    <input type="number" id="length" placeholder="Enter length">
+    <input id="length" type="number" inputmode="decimal" placeholder="e.g. 750">
 
     <label>Temperature (°C)</label>
-    <input type="number" id="temp" placeholder="Enter temperature">
+    <input id="temp" type="number" inputmode="decimal" placeholder="e.g. 35">
 
-    <button onclick="calculate()">Calculate Dimensions</button>
+    <button type="button" onclick="calculate()">Calculate Dimensions</button>
 
     <div class="result" id="output">
-      Enter values to calculate ATD dimensions
+      Enter values and press Calculate
     </div>
 
   </div>
@@ -162,26 +147,32 @@ button:active{
 
 <script>
 function calculate(){
-  const L = parseFloat(document.getElementById("length").value);
-  const T = parseFloat(document.getElementById("temp").value);
-  const refT = 35;
 
-  if(isNaN(L) || isNaN(T)){
+  const L = Number(document.getElementById("length").value);
+  const T = Number(document.getElementById("temp").value);
+
+  if(!L || !T){
     document.getElementById("output").innerHTML =
-      "⚠️ Please enter valid values";
+      "⚠️ Please enter valid numeric values";
     return;
   }
 
-  const deltaT = T - refT;
-  const factor = (L * 1.7e-5 * deltaT);
+  const refTemp = 35;
+  const deltaT = T - refTemp;
 
-  const X = 1300 + (1300 * factor);
-  const Y = 2300 + (2300 * factor);
+  const X_base = 1300;
+  const Y_base = 2300;
+  const alpha = 1.7e-5;
+
+  const expansion = L * alpha * deltaT;
+
+  const X = X_base + (X_base * expansion);
+  const Y = Y_base + (Y_base * expansion);
 
   document.getElementById("output").innerHTML = `
-    ΔT: <b>${deltaT.toFixed(1)} °C</b><br><br>
-    <b>X:</b> ${X.toFixed(1)} mm (${(X/1000).toFixed(3)} m)<br>
-    <b>Y:</b> ${Y.toFixed(1)} mm (${(Y/1000).toFixed(3)} m)<br><br>
+    <b>ΔT:</b> ${deltaT.toFixed(1)} °C<br><br>
+    <b>X:</b> ${X.toFixed(2)} mm (${(X/1000).toFixed(3)} m)<br>
+    <b>Y:</b> ${Y.toFixed(2)} mm (${(Y/1000).toFixed(3)} m)<br><br>
     Reference Temperature = <b>35°C</b> (Indian Railway TRD Standard)
   `;
 }
