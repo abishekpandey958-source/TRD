@@ -11,17 +11,15 @@
   <meta name="theme-color" content="#1e293b">
   <link rel="icon" href="app-icon.png">
   <link rel="apple-touch-icon" href="app-icon.png">
+
+  <!-- External CSS -->
   <link rel="stylesheet" href="style.css">
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- Inline CSS ONLY -->
   <style>
-    <script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js");
-}
-</script>
     body {
       background: linear-gradient(180deg, #0f172a, #e5e7eb);
       -webkit-user-select: none;
@@ -124,6 +122,7 @@ if ("serviceWorker" in navigator) {
   </p>
 </footer>
 
+<!-- Scripts -->
 <script>
 function round(val, d) {
   return Math.round((val + Number.EPSILON) * 10 ** d) / 10 ** d;
@@ -155,6 +154,15 @@ function calculate() {
 
   document.getElementById("results").classList.remove("hidden");
   document.getElementById("results").scrollIntoView({ behavior: "smooth" });
+}
+</script>
+
+<!-- ✅ SERVICE WORKER (Correct Place) -->
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./service-worker.js")
+    .then(() => console.log("Service Worker Registered"))
+    .catch(err => console.error("SW registration failed", err));
 }
 </script>
 
